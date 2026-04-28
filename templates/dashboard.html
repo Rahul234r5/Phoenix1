@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>AI Review Responder Dashboard</h1>
+    <p>Paste a review below:</p>
+    <textarea rows="4" cols="50" id="reviewInput"></textarea><br><br>
+    <button onclick="generateAI()">Generate Response</button>
+    
+    <h3>AI Suggested Response:</h3>
+    <p id="output" style="color: blue; font-weight: bold;"></p>
+
+    <script>
+        async function generateAI() {
+            const reviewText = document.getElementById('reviewInput').value;
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({review: reviewText})
+            });
+            const data = await response.json();
+            document.getElementById('output').innerText = data.response;
+        }
+    </script>
+</body>
+</html>
